@@ -138,9 +138,6 @@ def visualize_tree(coalitions, val_score, div_dir, tree, path, chr_, view=False)
     d.format = 'pdf'
     d.render()
 
-    with open(path+'out_dot_file.dot', 'w') as ft:
-        ft.write(d.source)
-
 
 def prepare_input(sentence, tokenizer):
     """
