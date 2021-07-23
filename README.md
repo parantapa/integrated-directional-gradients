@@ -15,6 +15,18 @@ In this paper, we introduce Integrated Directional Gradients (IDG), a method for
 
 <p align="center"><img src="./IDG.png" width="400" height="400"></p>
 
+Computation of attribution score (value function
+v) for an example sentence Frenetic but not
+really funny. Magenta and green respectively denote
+negative or positive contribution to the inferred
+class and the importance is represented by the color intensity.
+Constituency parse tree is used to obtain meaningful
+feature groups. Note that each word is further divided
+into tokens (owing to byte pair encodings) each
+of which has 768 dimensions. IDG computes importance
+scores in a bottom-up manner starting from the
+individual embedding dimensions working its way
+up to tokens, words, phrases and finally the sentence
 ## Requirements
   
 captum==0.2.0
