@@ -72,3 +72,6 @@ ground truth class - e.g., 0/1 for a binary classifier. The scores are however c
 output path - The image is stored in this path (default is the same folder)
 
 The code is commented for ease of use
+
+To precisely visualize the interactions between phrases, we search over the test examples for instances
+of negations. The examples that we picked for the three datasets can be found in the 'Examples' folder.
