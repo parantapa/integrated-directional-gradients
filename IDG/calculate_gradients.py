@@ -39,6 +39,7 @@ def calculate_IDG(inp, grads, position=None, bert=False):
             position = torch.LongTensor(position)
             mask = torch.zeros(inp.shape[0])
             mask[position] = 1
+        #print(mask)
         masked_inp = inp * mask.unsqueeze(1)
         norm_inp = masked_inp / torch.norm(masked_inp)
         intm_grads = torch.sum(grads * norm_inp.unsqueeze(0), dim=2)
@@ -122,7 +123,7 @@ def execute_single(string, model, tokenizer, target, path, bert=False):
             score = div_token[index[0]]
             dividend_func[i] = abs(div_token[index[0]])
         else:
-            score = calculate_IDG(inp, grads_neg, index).item()
+            score = calculate_IDG(inp, grads_neg, index, bert=bert).item()
             dividend_func[i] = abs(score)
             z += abs(score)
         if score > 0:
@@ -165,7 +166,7 @@ def execute_IDG(trees, model, tokenizer, target, path, bert=False):
     all_tokens = []
     sentences = []
     if len(trees) == 1:
-        execute_single(trees[0], model, tokenizer, target, path, bert=False)
+        execute_single(trees[0], model, tokenizer, target, path, bert=bert)
         return
     for tree in trees:
         tokens = Tree.fromstring(tree).leaves()
@@ -238,7 +239,7 @@ def execute_IDG(trees, model, tokenizer, target, path, bert=False):
                 score = div_token[index[0]]
                 dividend_func[i] = abs(div_token[index[0]])
             else:
-                score = calculate_IDG(inp, grads_neg, index).item()
+                score = calculate_IDG(inp, grads_neg, index, bert=bert).item()
                 dividend_func[i] = abs(score)
                 z += abs(score)
             if score > 0:
@@ -267,7 +268,7 @@ def execute_IDG(trees, model, tokenizer, target, path, bert=False):
         q = calculate_value_function(root)
         value_func_all.append(value_func)
     # calculate score for the whole text...<considering all the sentences>
-    div_score = calculate_IDG(inp, grads_neg, position='all')
+    div_score = calculate_IDG(inp, grads_neg, position='all', bert=bert)
     if div_score.item() > 0:
         dividend_dir_all.append([1])
         clr = '0.334 1.000 0.250' # color of the root node for visualisation
